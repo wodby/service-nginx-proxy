@@ -1,0 +1,81 @@
+name: nginx-proxy
+type: service
+icon: nginx
+title: Nginx Proxy
+scalable: true
+
+options:
+- version: '1.29'
+  tag: '1.29'
+  default: true
+- version: '1.28'
+  tag: '1.28'
+- version: '1.27'
+  tag: '1.27'
+  eol: '2025-06-24T00:00:00+00:00'
+- version: '1.25'
+  tag: '1.25'
+  eol: '2024-05-29T00:00:00+00:00'
+
+links:
+- name: backend
+  title: Backend
+  required: true
+  env:
+  - name: NGINX_BACKEND_HOST
+    value: '{{link.host}}'
+  - name: NGINX_BACKEND_PORT
+    value: '{{link.port}}'
+  selectors:
+  - type: service
+
+endpoints:
+- name: http
+  ports:
+  - name: http
+    number: 80
+    protocol: http
+    main: true
+
+labels:
+- nginx
+- proxy
+
+configs:
+- name: main
+  title: Main
+  filepath: /etc/gotpl/config/nginx.conf.tmpl
+  config: nginx.conf.tmpl
+- name: vhost
+  title: Virtual host
+  filepath: /etc/gotpl/vhost.conf.tmpl
+  config: vhost.conf.tmpl
+
+env:
+- name: NGINX_VHOST_PRESET
+  value: http-proxy
+
+helm:
+  name: wodby
+  source: oci://registry-1.docker.io/wodby/nginx
+  chart: oci://registry-1.docker.io/wodby/nginx
+  version: 0.2.0
+
+workloads:
+- name: main
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: '{{helm.release}}'
+  kind: deployment
+  primary: true
+  helm:
+    labels: commonLabels
+    annotations: commonAnnotations
+    volumes: extraVolumes
+  containers:
+  - name: nginx
+    image: wodby/nginx
+    helm:
+      resources: resources
+      env: extraEnvVars
+      mounts: extraVolumeMounts
