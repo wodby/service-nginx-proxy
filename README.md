@@ -20,7 +20,7 @@ configuration for Nginx Proxy.
 | Containers | `nginx` using `wodby/nginx` |
 | Endpoints | `http`: HTTP 80 (main) |
 | Service links | Backend, required |
-| Helm | chart `oci://registry-1.docker.io/wodby/nginx`; version `0.2.0` |
+| Helm | chart `oci://registry-1.docker.io/wodby/nginx`; version `0.2.2` |
 | Configuration | 2 configuration files |
 
 ## Use this service
