@@ -61,6 +61,14 @@ env:
 - name: NGINX_VHOST_PRESET
   value: http-proxy
 
+deployment:
+  strategy: rolling
+  maxUnavailable: 0
+  maxSurge: 1
+  minReady: 10s
+  progressDeadline: 15m
+  shutdownGracePeriod: 30s
+
 helm:
   name: wodby
   source: oci://registry-1.docker.io/wodby/nginx
