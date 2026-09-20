@@ -15,12 +15,12 @@ configuration for Nginx Proxy.
 | --- | --- |
 | Service name | `nginx-proxy` |
 | Type | Application service |
-| Versions | `1.29` by default; also available: `1.28`, `1.27`, `1.25` |
+| Versions | `1.31` by default; also available: `1.30` |
 | Workloads | `main` (Deployment), primary; scalable |
 | Containers | `nginx` using `wodby/nginx` |
 | Endpoints | `http`: HTTP 80 (main) |
 | Service links | Backend, required |
-| Helm | chart `oci://registry-1.docker.io/wodby/nginx`; version `0.3.2` |
+| Helm | chart `oci://registry-1.docker.io/wodby/nginx`; version `0.4.0` |
 | Configuration | 2 configuration files |
 
 ## Use this service
