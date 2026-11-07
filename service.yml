@@ -81,6 +81,8 @@ workloads:
   containers:
   - name: nginx
     image: wodby/nginx
+    resources:
+      preset: nano
     helm:
       resources: resources
       env: extraEnvVars
